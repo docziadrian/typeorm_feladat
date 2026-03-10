@@ -1,0 +1,39 @@
+### create
+
+POST http://localhost:3000/users
+Content-Type: application/json  
+
+{
+    "name": "Test User 22",
+    "email": "user22@example.com",
+    "password": "password123"
+}
+
+
+### GET users
+
+GET http://localhost:3000/users
+Content-Type: application/json
+
+
+### GET user by ID
+GET http://localhost:3000/users/596762af-6262-4865-9c71-d512bfe18543
+Content-Type: application/json
+
+### DELETE user by ID
+DELETE http://localhost:3000/users/596762af-6262-4865-9c71-d512bfe18543
+Content-Type: application/json  
+
+
+### GET user by id with tasks
+GET http://localhost:3000/users/02fcfbe2-dd12-4d79-bb7b-dcc14a13c086/tasks
+Content-Type: application/json  
+
+### UPDATE user by ID
+PATCH http://localhost:3000/users/02fcfbe2-dd12-4d79-bb7b-dcc14a13c086
+Content-Type: application/json  
+
+{
+    "name": "Updated User Name",
+    "email": "user8@exapmle.com"
+}

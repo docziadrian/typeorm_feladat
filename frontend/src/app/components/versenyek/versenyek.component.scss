@@ -1,0 +1,42 @@
+﻿.team-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.team-form-card, .team-list-card {
+  width: 100%;
+}
+
+.team-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.team-table {
+  width: 100%;
+}
+
+.actions-header {
+  text-align: right;
+}
+
+.actions-cell {
+  text-align: right;
+}
+
+.edit-button {
+  background-color: #ffb300;
+  color: #000;
+  margin-right: 10px;
+}

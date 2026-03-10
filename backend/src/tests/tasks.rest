@@ -1,0 +1,21 @@
+### GET all tasks 
+
+GET http://localhost:3000/tasks
+Content-Type: application/json
+
+
+### create task  
+
+POST http://localhost:3000/tasks
+Content-Type: application/json      
+
+{
+    "title": "Task 1",
+    "description": "Description for Task 1",
+    "userId": "1a1f2eea-db25-4ac4-a2c1-b87b48231caa"
+}
+
+### GET task by id
+
+GET http://localhost:3000/tasks/ecaa9279-a228-4498-ab8f-51a35354fc02
+Content-Type: application/json  
