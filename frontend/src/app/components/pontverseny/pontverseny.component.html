@@ -1,0 +1,168 @@
+<div class="pontverseny-container">
+  <div class="pontverseny-grid">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Versenyzői pontverseny</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table
+          mat-table
+          [dataSource]="versenyzoiTabla"
+          class="pontverseny-tabla"
+        >
+          <ng-container matColumnDef="pozicio">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nev">
+            <th mat-header-cell *matHeaderCellDef>Versenyző</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.nev }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="csapat">
+            <th mat-header-cell *matHeaderCellDef>Csapat</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.csapat }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="pont">
+            <th mat-header-cell *matHeaderCellDef>Pont</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              <strong>{{ element.pont }}</strong>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="gyozelem">
+            <th mat-header-cell *matHeaderCellDef>Győzelem</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.gyozelem }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dobogo">
+            <th mat-header-cell *matHeaderCellDef>Dobogó</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.dobogo }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="versenyzoOszlopok"></tr>
+          <tr mat-row *matRowDef="let row; columns: versenyzoOszlopok"></tr>
+        </table>
+        <mat-paginator
+          #lapozoVersenyzo
+          [pageSizeOptions]="[5, 10, 25]"
+          [pageSize]="10"
+          showFirstLastButtons
+        ></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Konstruktőri pontverseny</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table
+          mat-table
+          [dataSource]="konstruktoriTabla"
+          class="pontverseny-tabla"
+        >
+          <ng-container matColumnDef="pozicio">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="csapatNev">
+            <th mat-header-cell *matHeaderCellDef>Csapat</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.csapatNev }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="pont">
+            <th mat-header-cell *matHeaderCellDef>Pont</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              <strong>{{ element.pont }}</strong>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="gyozelem">
+            <th mat-header-cell *matHeaderCellDef>Győzelem</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.gyozelem }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dobogo">
+            <th mat-header-cell *matHeaderCellDef>Dobogó</th>
+            <td
+              mat-cell
+              *matCellDef="let element; let i = index"
+              [class]="getSorClass(i)"
+            >
+              {{ element.dobogo }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="konstruktorOszlopok"></tr>
+          <tr mat-row *matRowDef="let row; columns: konstruktorOszlopok"></tr>
+        </table>
+        <mat-paginator
+          #lapozoKonstruktor
+          [pageSizeOptions]="[5, 10, 25]"
+          [pageSize]="10"
+          showFirstLastButtons
+        ></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

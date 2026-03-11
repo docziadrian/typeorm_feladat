@@ -1,7 +1,9 @@
 ﻿<div class="team-container">
   <mat-card class="team-form-card">
     <mat-card-header>
-      <mat-card-title>{{ isEditMode ? 'Verseny Módosítása' : 'Új Verseny' }}</mat-card-title>
+      <mat-card-title>{{
+        isEditMode ? "Verseny Módosítása" : "Új Verseny"
+      }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="versenyForm" (ngSubmit)="onSubmit()" class="team-form">
@@ -15,14 +17,24 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Dátum</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="date" required />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="date"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Állapot</mat-label>
           <mat-select formControlName="status" required>
-            <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+            <mat-option *ngFor="let s of statuses" [value]="s">{{
+              s
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
@@ -34,10 +46,20 @@
           </mat-select>
         </mat-form-field>
         <div class="form-actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="versenyForm.invalid">
-            {{ isEditMode ? 'Mentés' : 'Hozzáadás' }}
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="versenyForm.invalid"
+          >
+            {{ isEditMode ? "Mentés" : "Hozzáadás" }}
           </button>
-          <button mat-button type="button" (click)="resetForm()" *ngIf="isEditMode">
+          <button
+            mat-button
+            type="button"
+            (click)="resetForm()"
+            *ngIf="isEditMode"
+          >
             Mégse
           </button>
         </div>
@@ -50,48 +72,76 @@
       <mat-card-title>Versenyek Listája</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <table mat-table [dataSource]="versenyek" class="mat-elevation-z8 team-table">
+      <table
+        mat-table
+        [dataSource]="versenyek"
+        class="mat-elevation-z8 team-table"
+      >
         <ng-container matColumnDef="index">
-          <th mat-header-cell *matHeaderCellDef> # </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
         </ng-container>
 
         <ng-container matColumnDef="round">
-          <th mat-header-cell *matHeaderCellDef> Forduló </th>
-          <td mat-cell *matCellDef="let element"> {{element.round}} </td>
+          <th mat-header-cell *matHeaderCellDef>Forduló</th>
+          <td mat-cell *matCellDef="let element">{{ element.round }}</td>
         </ng-container>
 
         <ng-container matColumnDef="grandPrix">
-          <th mat-header-cell *matHeaderCellDef> Nagydíj </th>
-          <td mat-cell *matCellDef="let element"> {{element.grandPrix}} </td>
+          <th mat-header-cell *matHeaderCellDef>Nagydíj</th>
+          <td mat-cell *matCellDef="let element">{{ element.grandPrix }}</td>
         </ng-container>
 
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef> Dátum </th>
-          <td mat-cell *matCellDef="let element"> {{element.date | date:'yyyy-MM-dd'}} </td>
+          <th mat-header-cell *matHeaderCellDef>Dátum</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.date | date: "yyyy-MM-dd" }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Állapot </th>
-          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          <th mat-header-cell *matHeaderCellDef>Állapot</th>
+          <td mat-cell *matCellDef="let element">{{ element.status }}</td>
         </ng-container>
 
         <ng-container matColumnDef="circuit">
-          <th mat-header-cell *matHeaderCellDef> Pálya </th>
-          <td mat-cell *matCellDef="let element"> {{ getCircuitName(element.circuitId) }} </td>
+          <th mat-header-cell *matHeaderCellDef>Pálya</th>
+          <td mat-cell *matCellDef="let element">
+            {{ getCircuitName(element.circuitId) }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="actions-header"> Műveletek </th>
+          <th mat-header-cell *matHeaderCellDef class="actions-header">
+            Műveletek
+          </th>
           <td mat-cell *matCellDef="let element" class="actions-cell">
-            <button mat-flat-button class="edit-button" (click)="editVerseny(element)">Szerk.</button>
-            <button mat-flat-button color="warn" class="delete-button" (click)="deleteVerseny(element.id)">Törlés</button>
+            <button
+              mat-flat-button
+              class="edit-button"
+              (click)="editVerseny(element)"
+            >
+              Szerk.
+            </button>
+            <button
+              mat-flat-button
+              color="warn"
+              class="delete-button"
+              (click)="deleteVerseny(element.id)"
+            >
+              Törlés
+            </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25]"
+        [pageSize]="10"
+        showFirstLastButtons
+      ></mat-paginator>
     </mat-card-content>
   </mat-card>
 </div>

@@ -1,0 +1,37 @@
+.pontverseny-container {
+  padding: 20px;
+}
+
+.pontverseny-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.pontverseny-tabla {
+  width: 100%;
+}
+
+.arany-sor {
+  background-color: rgba(212, 175, 55, 0.15) !important;
+  color: #f0c674 !important;
+  font-weight: 700;
+}
+
+.ezust-sor {
+  background-color: rgba(192, 192, 192, 0.1) !important;
+  color: #c0c0c0 !important;
+  font-weight: 700;
+}
+
+.bronz-sor {
+  background-color: rgba(205, 127, 50, 0.1) !important;
+  color: #cd7f32 !important;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .pontverseny-grid {
+    grid-template-columns: 1fr;
+  }
+}

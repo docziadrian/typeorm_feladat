@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="hu"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>F1 2025 Szezonkezelő központ</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Roboto -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="global-styles">
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #0d1117;
+      color: #e6edf3;
+      margin: 0;
+    }
+    /* Custom scrollbar for a more integrated feel */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0d1117;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30363d;
+      border-radius: 4px;
+    }
+  </style>
+<style data-purpose="component-styles">
+    /* Styling to mimic Angular Material Dark Theme components */
+    .mat-card {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+    }
+    .mat-tab-nav {
+      border-bottom: 1px solid #30363d;
+    }
+    .active-tab {
+      color: #f08c35; /* Primary accent color from F1 context or screenshot */
+      border-bottom: 2px solid #f08c35;
+    }
+    .table-row-gold {
+      background-color: rgba(212, 175, 55, 0.15);
+      color: #f0c674;
+    }
+    .table-row-silver {
+      background-color: rgba(192, 192, 192, 0.1);
+      color: #c0c0c0;
+    }
+    .table-row-bronze {
+      background-color: rgba(205, 127, 50, 0.1);
+      color: #cd7f32;
+    }
+    .f1-red-button {
+      background-color: #3b49df; /* Matching the blue 'Frissítés' button in image */
+      transition: background-color 0.2s;
+    }
+    .f1-red-button:hover {
+      background-color: #2533b3;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+<!-- BEGIN: MainHeader -->
+<header class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4" data-purpose="dashboard-header">
+<div class="flex items-center gap-6">
+<!-- F1 Logo Placeholder -->
+<div class="w-24 h-10 flex items-center justify-center">
+<img alt="F1 Logo" class="max-h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCToH0FRA3_Lk61pEu1J2M_b48S1dOyP_ux3fotW1stNza48ozlG0JtDrW2R4lDBej96IQcCty2-k_WaVg9pk3-Lh2hRnGkLiCjXpDgqj72ijn3AIJXh2G4UX1OgYfXmefnt1kj2_AethuFVfMLbkYKk6fZDwb-uKTsMwmRvzPJh7PEDETaNsiLxWJWYC56Zf1plcG7BU1QWohG5tYqqNjP6jNMlleNadUSotBJmylO-EpSbs9UZBoNLztfswFjy6p_9GgZCxT37M" style="filter: brightness(0) invert(1) grayscale(1) contrast(200%); clip-path: inset(45px 810px 580px 80px);"/>
+</div>
+<div>
+<p class="text-orange-500 text-xs font-bold tracking-widest uppercase mb-1">FORMA-1 2025</p>
+<h1 class="text-4xl font-bold text-white tracking-tight">Szezonkezelő központ</h1>
+<p class="text-gray-400 text-sm mt-1">Csapatok, versenyzők, pályák, versenyek és eredmények egy Angular Material felületen.</p>
+</div>
+</div>
+<button class="f1-red-button text-white px-6 py-2 rounded shadow-md font-medium text-sm">
+      Frissítés
+    </button>
+</header>
+<!-- END: MainHeader -->
+<main class="max-w-7xl mx-auto space-y-6">
+<!-- BEGIN: StatsGrid -->
+<section class="grid grid-cols-2 md:grid-cols-5 gap-4" data-purpose="quick-stats">
+<!-- Csapatok Card -->
+<div class="mat-card p-4 flex flex-col justify-between h-28">
+<span class="text-gray-400 text-xs font-medium">Csapatok</span>
+<span class="text-3xl font-bold">10</span>
+</div>
+<!-- Versenyzők Card -->
+<div class="mat-card p-4 flex flex-col justify-between h-28">
+<span class="text-gray-400 text-xs font-medium">Versenyzők</span>
+<span class="text-3xl font-bold">21</span>
+</div>
+<!-- Pályák Card -->
+<div class="mat-card p-4 flex flex-col justify-between h-28">
+<span class="text-gray-400 text-xs font-medium">Pályák</span>
+<span class="text-3xl font-bold">24</span>
+</div>
+<!-- Versenyek Card -->
+<div class="mat-card p-4 flex flex-col justify-between h-28">
+<span class="text-gray-400 text-xs font-medium">Versenyek</span>
+<span class="text-3xl font-bold">24</span>
+</div>
+<!-- Eredmények Card -->
+<div class="mat-card p-4 flex flex-col justify-between h-28">
+<span class="text-gray-400 text-xs font-medium">Eredmények</span>
+<span class="text-3xl font-bold">72</span>
+</div>
+</section>
+<!-- END: StatsGrid -->
+<!-- BEGIN: NavigationTabs -->
+<nav class="mat-tab-nav flex overflow-x-auto whitespace-nowrap" data-purpose="main-navigation">
+<a class="px-6 py-4 text-sm font-medium text-gray-400 hover:text-white border-b-2 border-transparent" href="#">Csapatok</a>
+<a class="px-6 py-4 text-sm font-medium text-gray-400 hover:text-white border-b-2 border-transparent" href="#">Versenyzők</a>
+<a class="px-6 py-4 text-sm font-medium text-gray-400 hover:text-white border-b-2 border-transparent" href="#">Pályák</a>
+<a class="px-6 py-4 text-sm font-medium text-gray-400 hover:text-white border-b-2 border-transparent" href="#">Versenyek</a>
+<a class="px-6 py-4 text-sm font-medium text-gray-400 hover:text-white border-b-2 border-transparent" href="#">Eredmények</a>
+<a class="px-6 py-4 text-sm font-medium active-tab" href="#">Pontverseny</a>
+</nav>
+<!-- END: NavigationTabs -->
+<!-- BEGIN: ContentArea -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6" data-purpose="standings-tables">
+<!-- Driver Standings -->
+<div class="mat-card overflow-hidden">
+<div class="p-6">
+<h2 class="text-xl font-bold mb-6">Versenyzői pontverseny</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="text-gray-400 border-b border-gray-800">
+<th class="pb-3 font-medium">#</th>
+<th class="pb-3 font-medium">Versenyző</th>
+<th class="pb-3 font-medium">Csapat</th>
+<th class="pb-3 font-medium">Pont</th>
+<th class="pb-3 font-medium">Győzelem</th>
+<th class="pb-3 font-medium">Dobogó</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-800/50">
+<tr class="table-row-gold">
+<td class="py-4 px-2">1</td>
+<td class="py-4 font-bold">Lando Norris</td>
+<td class="py-4">McLaren</td>
+<td class="py-4 font-bold">364</td>
+<td class="py-4">7</td>
+<td class="py-4">18</td>
+</tr>
+<tr class="table-row-silver">
+<td class="py-4 px-2">2</td>
+<td class="py-4 font-bold">Oscar Piastri</td>
+<td class="py-4">McLaren</td>
+<td class="py-4 font-bold">325</td>
+<td class="py-4">7</td>
+<td class="py-4">16</td>
+</tr>
+<tr class="table-row-bronze">
+<td class="py-4 px-2">3</td>
+<td class="py-4 font-bold">Max Verstappen</td>
+<td class="py-4">Red Bull Racing</td>
+<td class="py-4 font-bold">320</td>
+<td class="py-4">8</td>
+<td class="py-4">15</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">4</td>
+<td class="py-4">George Russell</td>
+<td class="py-4">Mercedes</td>
+<td class="py-4 font-medium">164</td>
+<td class="py-4">2</td>
+<td class="py-4">9</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">5</td>
+<td class="py-4">Charles Leclerc</td>
+<td class="py-4">Ferrari</td>
+<td class="py-4 font-medium">111</td>
+<td class="py-4">0</td>
+<td class="py-4">7</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">6</td>
+<td class="py-4">Kimi Antonelli</td>
+<td class="py-4">Mercedes</td>
+<td class="py-4 font-medium">48</td>
+<td class="py-4">0</td>
+<td class="py-4">3</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">7</td>
+<td class="py-4">Carlos Sainz</td>
+<td class="py-4">Williams</td>
+<td class="py-4 font-medium">30</td>
+<td class="py-4">0</td>
+<td class="py-4">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Constructor Standings -->
+<div class="mat-card overflow-hidden">
+<div class="p-6">
+<h2 class="text-xl font-bold mb-6">Konstruktőri pontverseny</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="text-gray-400 border-b border-gray-800">
+<th class="pb-3 font-medium">#</th>
+<th class="pb-3 font-medium">Csapat</th>
+<th class="pb-3 font-medium">Pont</th>
+<th class="pb-3 font-medium">Győzelem</th>
+<th class="pb-3 font-medium">Dobogó</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-800/50">
+<tr class="table-row-gold">
+<td class="py-4 px-2">1</td>
+<td class="py-4 font-bold">McLaren</td>
+<td class="py-4 font-bold">689</td>
+<td class="py-4">14</td>
+<td class="py-4">34</td>
+</tr>
+<tr class="table-row-silver">
+<td class="py-4 px-2">2</td>
+<td class="py-4 font-bold">Red Bull Racing</td>
+<td class="py-4 font-bold">320</td>
+<td class="py-4">8</td>
+<td class="py-4">15</td>
+</tr>
+<tr class="table-row-bronze">
+<td class="py-4 px-2">3</td>
+<td class="py-4 font-bold">Mercedes</td>
+<td class="py-4 font-bold">212</td>
+<td class="py-4">2</td>
+<td class="py-4">12</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">4</td>
+<td class="py-4">Ferrari</td>
+<td class="py-4 font-medium">111</td>
+<td class="py-4">0</td>
+<td class="py-4">7</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">5</td>
+<td class="py-4">Williams</td>
+<td class="py-4 font-medium">30</td>
+<td class="py-4">0</td>
+<td class="py-4">2</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">6</td>
+<td class="py-4">Kick Sauber</td>
+<td class="py-4 font-medium">15</td>
+<td class="py-4">0</td>
+<td class="py-4">1</td>
+</tr>
+<tr class="hover:bg-gray-800/30">
+<td class="py-4 px-2">7</td>
+<td class="py-4">Racing Bulls</td>
+<td class="py-4 font-medium">15</td>
+<td class="py-4">0</td>
+<td class="py-4">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- END: ContentArea -->
+</main>
+<footer class="max-w-7xl mx-auto mt-12 mb-8 text-center text-gray-600 text-xs">
+<p>© 2025 Forma-1 Szezonkezelő központ. Minden jog fenntartva.</p>
+</footer>
+</body></html>

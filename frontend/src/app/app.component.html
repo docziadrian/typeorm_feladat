@@ -1,3 +1,66 @@
-<app-navbar></app-navbar>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-left">
+      <div class="brand">
+        <span class="brand-tag">FORMA-1 2025</span>
+        <h1 class="brand-title">Szezonkezelő központ</h1>
+        <p class="brand-subtitle">
+          Csapatok, versenyzők, pályák, versenyek és eredmények egy Angular
+          Material felületen.
+        </p>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="adatokBetoltese()">
+      <mat-icon>refresh</mat-icon> Frissítés
+    </button>
+  </header>
 
-<router-outlet />
+  <section class="stats-grid">
+    <mat-card class="stat-card">
+      <span class="stat-label">Csapatok</span>
+      <span class="stat-value">{{ animaltSzamok.teams }}</span>
+    </mat-card>
+    <mat-card class="stat-card">
+      <span class="stat-label">Versenyzők</span>
+      <span class="stat-value">{{ animaltSzamok.drivers }}</span>
+    </mat-card>
+    <mat-card class="stat-card">
+      <span class="stat-label">Pályák</span>
+      <span class="stat-value">{{ animaltSzamok.circuits }}</span>
+    </mat-card>
+    <mat-card class="stat-card">
+      <span class="stat-label">Versenyek</span>
+      <span class="stat-value">{{ animaltSzamok.races }}</span>
+    </mat-card>
+    <mat-card class="stat-card">
+      <span class="stat-label">Eredmények</span>
+      <span class="stat-value">{{ animaltSzamok.results }}</span>
+    </mat-card>
+  </section>
+
+  <nav
+    mat-tab-nav-bar
+    [tabPanel]="tabPanel"
+    class="tab-nav"
+    mat-stretch-tabs="false"
+  >
+    @for (ful of fulek; track ful.utvonal) {
+      <a
+        mat-tab-link
+        [routerLink]="ful.utvonal"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        {{ ful.cimke }}
+      </a>
+    }
+  </nav>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet />
+  </mat-tab-nav-panel>
+
+  <footer class="dashboard-footer">
+    <p>© 2025 Forma-1 Szezonkezelő központ. Minden jog fenntartva.</p>
+  </footer>
+</div>

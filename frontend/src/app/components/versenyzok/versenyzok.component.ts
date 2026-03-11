@@ -1,18 +1,24 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ApiService } from '../../services/api.service';
+﻿import { Component, OnInit, ViewChild } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { MatTableModule, MatTableDataSource } from "@angular/material/table";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCardModule } from "@angular/material/card";
+import { MatSelectModule } from "@angular/material/select";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatPaginatorModule, MatPaginator } from "@angular/material/paginator";
+import { ApiService } from "../../services/api.service";
 
 @Component({
-  selector: 'app-versenyzok',
+  selector: "app-versenyzok",
   standalone: true,
   imports: [
     CommonModule,
@@ -24,27 +30,41 @@ import { ApiService } from '../../services/api.service';
     MatIconModule,
     MatCardModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatPaginatorModule,
   ],
-  templateUrl: './versenyzok.component.html',
-  styleUrl: './versenyzok.component.scss'
+  templateUrl: "./versenyzok.component.html",
+  styleUrl: "./versenyzok.component.scss",
 })
 export class VersenyzokComponent implements OnInit {
   versenyzoForm: FormGroup;
-  versenyzok: any[] = [];
+  versenyzok = new MatTableDataSource<any>([]);
   csapatok: any[] = [];
-  displayedColumns: string[] = ['index', 'firstName', 'lastName', 'nationality', 'number', 'team', 'rookie', 'actions'];
+  @ViewChild(MatPaginator) lapozoVersenyzo!: MatPaginator;
+  displayedColumns: string[] = [
+    "index",
+    "firstName",
+    "lastName",
+    "nationality",
+    "number",
+    "team",
+    "rookie",
+    "actions",
+  ];
   isEditMode = false;
-  selectedId: string | null = null;
+  selectedId: number | null = null;
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+  ) {
     this.versenyzoForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      nationality: ['', Validators.required],
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+      nationality: ["", Validators.required],
       number: [null, [Validators.required, Validators.min(1)]],
       teamId: [null, Validators.required],
-      rookie: [false]
+      rookie: [false],
     });
   }
 
@@ -54,35 +74,40 @@ export class VersenyzokComponent implements OnInit {
   }
 
   loadVersenyzok() {
-    this.apiService.selectAll('drivers').subscribe((data: any) => {
-      this.versenyzok = data;
+    this.apiService.selectAll("drivers").subscribe((data: any) => {
+      this.versenyzok.data = data;
+      this.versenyzok.paginator = this.lapozoVersenyzo;
     });
   }
 
   loadCsapatok() {
-    this.apiService.selectAll('teams').subscribe((data: any) => {
+    this.apiService.selectAll("teams").subscribe((data: any) => {
       this.csapatok = data;
     });
   }
 
   getTeamName(teamId: number): string {
-    const team = this.csapatok.find(t => t.id === teamId);
-    return team ? team.name : '';
+    const team = this.csapatok.find((t) => t.id === teamId);
+    return team ? team.name : "";
   }
 
   onSubmit() {
     if (this.versenyzoForm.invalid) return;
 
     if (this.isEditMode && this.selectedId) {
-      this.apiService.update('drivers', this.selectedId, this.versenyzoForm.value).subscribe(() => {
-        this.resetForm();
-        this.loadVersenyzok();
-      });
+      this.apiService
+        .update("drivers", this.selectedId, this.versenyzoForm.value)
+        .subscribe(() => {
+          this.resetForm();
+          this.loadVersenyzok();
+        });
     } else {
-      this.apiService.insert('drivers', this.versenyzoForm.value).subscribe(() => {
-        this.resetForm();
-        this.loadVersenyzok();
-      });
+      this.apiService
+        .insert("drivers", this.versenyzoForm.value)
+        .subscribe(() => {
+          this.resetForm();
+          this.loadVersenyzok();
+        });
     }
   }
 
@@ -90,17 +115,17 @@ export class VersenyzokComponent implements OnInit {
     this.isEditMode = true;
     this.selectedId = versenyzo.id;
     this.versenyzoForm.patchValue({
-        firstName: versenyzo.firstName,
-        lastName: versenyzo.lastName,
-        nationality: versenyzo.nationality,
-        number: versenyzo.number,
-        teamId: versenyzo.teamId,
-        rookie: versenyzo.rookie
+      firstName: versenyzo.firstName,
+      lastName: versenyzo.lastName,
+      nationality: versenyzo.nationality,
+      number: versenyzo.number,
+      teamId: versenyzo.teamId,
+      rookie: versenyzo.rookie,
     });
   }
 
-  deleteVersenyzo(id: string) {
-    this.apiService.delete('drivers', id).subscribe(() => {
+  deleteVersenyzo(id: number) {
+    this.apiService.delete("drivers", id).subscribe(() => {
       this.loadVersenyzok();
     });
   }

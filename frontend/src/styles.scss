@@ -1,0 +1,119 @@
+﻿body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #0d1117;
+  color: #e6edf3;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+.mat-mdc-card {
+  background-color: #161b22 !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d;
+}
+
+.mat-mdc-table {
+  background-color: #161b22 !important;
+}
+
+.mat-mdc-header-cell {
+  color: #8b949e !important;
+  border-bottom-color: #30363d !important;
+}
+
+.mat-mdc-cell {
+  color: #e6edf3 !important;
+  border-bottom-color: #21262d !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: rgba(48, 54, 61, 0.3) !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mdc-text-field--filled {
+  background-color: #21262d !important;
+}
+
+.mat-mdc-form-field .mdc-text-field--filled .mdc-floating-label {
+  color: #8b949e !important;
+}
+
+.mat-mdc-input-element {
+  color: #e6edf3 !important;
+}
+
+.mat-mdc-select-value {
+  color: #e6edf3 !important;
+}
+
+.mat-mdc-tab-nav-bar {
+  border-bottom: 1px solid #30363d;
+}
+
+.mat-mdc-tab-link {
+  color: #8b949e !important;
+}
+
+.mat-mdc-tab-link.mdc-tab--active {
+  color: #f08c35 !important;
+}
+
+.mat-mdc-tab-link .mdc-tab-indicator__content--underline {
+  border-color: #f08c35 !important;
+}
+
+.mat-mdc-card-header {
+  padding: 16px 16px 0 16px;
+}
+
+.mat-mdc-card-title {
+  color: #e6edf3 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+.mat-mdc-card-content {
+  padding: 16px !important;
+}
+
+.mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled~.mdc-checkbox__background {
+  border-color: #8b949e !important;
+}
+
+.mat-mdc-checkbox .mdc-label {
+  color: #e6edf3 !important;
+}
+
+.mat-mdc-select-panel {
+  background-color: #21262d !important;
+}
+
+.mat-mdc-option {
+  color: #e6edf3 !important;
+}
+
+.mat-mdc-option:hover {
+  background-color: #30363d !important;
+}
+
+.mat-datepicker-content {
+  background-color: #161b22 !important;
+  color: #e6edf3 !important;
+}

@@ -5,14 +5,15 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Circuit } from "./Circuit";
 import { RaceResult } from "./RaceResult";
 
 @Index("idx_race_circuitId", ["circuitId"], {})
-@Entity("race", { schema: "2025_forma1" })
+@Entity("race")
 export class Race {
-  @Column("int", { primary: true, name: "id" })
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column("int", { name: "round" })

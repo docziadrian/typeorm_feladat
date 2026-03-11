@@ -1,4 +1,11 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Driver } from "./Driver";
 import { Race } from "./Race";
 import { Team } from "./Team";
@@ -6,9 +13,9 @@ import { Team } from "./Team";
 @Index("idx_result_raceId", ["raceId"], {})
 @Index("idx_result_driverId", ["driverId"], {})
 @Index("idx_result_teamId", ["teamId"], {})
-@Entity("race_result", { schema: "2025_forma1" })
+@Entity("race_result")
 export class RaceResult {
-  @Column("int", { primary: true, name: "id" })
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column("int", { name: "position" })

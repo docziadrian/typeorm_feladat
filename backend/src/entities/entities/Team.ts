@@ -1,11 +1,17 @@
-import { Column, Entity, Index, OneToMany } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Driver } from "./Driver";
 import { RaceResult } from "./RaceResult";
 
 @Index("uq_team_name", ["name"], { unique: true })
-@Entity("team", { schema: "2025_forma1" })
+@Entity("team")
 export class Team {
-  @Column("int", { primary: true, name: "id" })
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column("varchar", { name: "name", unique: true, length: 255 })

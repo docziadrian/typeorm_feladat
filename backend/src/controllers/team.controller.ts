@@ -1,85 +1,49 @@
 import { Request, Response } from "express";
 import { TeamService } from "../services/team.service";
-import bcrypt from "bcrypt";
 
 export class TeamController {
-  constructor(private teamService = new TeamService()) {}
+  private service = new TeamService();
 
-  create = async (req: Request, res: Response) => {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Name, email, and password are required." });
-    }
-    try {
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      const team = await this.teamService.createTeam(
-        name,
-        email,
-        hashedPassword,
-      );
-      return res.status(201).json(team);
-    } catch (error) {
-      console.error("Error creating team:", error);
-      return res.status(500).json({ message: "Internal server error." });
-    }
-  };
-
-  list = async (_req: Request, res: Response) => {
-    const teams = await this.teamService.listTeams();
-    return res.json(teams);
+  getAll = async (_req: Request, res: Response) => {
+    const data = await this.service.getAll();
+    return res.json(data);
   };
 
   getById = async (req: Request, res: Response) => {
-    if (!req.params.id) {
-      return res.status(400).json({ message: "Team ID is required." });
+    const entity = await this.service.getById(Number(req.params.id));
+    if (!entity) return res.status(404).json({ message: "Not found" });
+    return res.json(entity);
+  };
+
+  create = async (req: Request, res: Response) => {
+    try {
+      const entity = await this.service.create(req.body);
+      return res.status(201).json(entity);
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
     }
-    const team = await this.teamService.getTeamById(req.params.id as number);
-    if (!team) {
-      return res.status(404).json({ message: "Team not found." });
-    }
-    return res.json(team);
   };
 
   update = async (req: Request, res: Response) => {
-    if (!req.params.id) {
-      return res.status(400).json({ message: "Team ID is required." });
+    try {
+      const result = await this.service.update(Number(req.params.id), req.body);
+      if (result.affected === 0)
+        return res.status(404).json({ message: "Not found" });
+      const updated = await this.service.getById(Number(req.params.id));
+      return res.json(updated);
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
     }
-    const { name, email } = req.body;
-    if (!name || !email) {
-      return res.status(400).json({ message: "Name and email are required." });
-    }
-    const result = await this.teamService.updateTeam(
-      req.params.id as number,
-      name,
-      email,
-    );
-    if (result.affected === 0) {
-      return res.status(404).json({ message: "Team not found." });
-    }
-    return res.status(200).json({ message: "Team updated successfully." });
   };
 
   delete = async (req: Request, res: Response) => {
-    if (!req.params.id) {
-      return res.status(400).json({ message: "Team ID is required." });
+    try {
+      const result = await this.service.delete(Number(req.params.id));
+      if (result.affected === 0)
+        return res.status(404).json({ message: "Not found" });
+      return res.json({ message: "Deleted" });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
     }
-    const result = await this.teamService.deleteTeam(req.params.id as number);
-    if (result.affected === 0) {
-      return res.status(404).json({ message: "Team not found." });
-    }
-    return res.status(200).json({ message: "Team deleted successfully." });
-  };
-
-  getWithTasks = async (req: Request, res: Response) => {
-    if (!req.params.id) {
-      return res.status(400).json({ message: "Team ID is required." });
-    }
-    const team = await this.teamService.getTeamById(req.params.id as number);
-    if (!team) {
-      return res.status(404).json({ message: "Team not found." });
-    }
-    return res.json(team);
   };
 }

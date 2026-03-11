@@ -1,19 +1,25 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { ApiService } from '../../services/api.service';
+﻿import { Component, OnInit, ViewChild } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { MatTableModule, MatTableDataSource } from "@angular/material/table";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCardModule } from "@angular/material/card";
+import { MatSelectModule } from "@angular/material/select";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
+import { MatPaginatorModule, MatPaginator } from "@angular/material/paginator";
+import { ApiService } from "../../services/api.service";
 
 @Component({
-  selector: 'app-versenyek',
+  selector: "app-versenyek",
   standalone: true,
   imports: [
     CommonModule,
@@ -26,27 +32,40 @@ import { ApiService } from '../../services/api.service';
     MatCardModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule,
   ],
-  templateUrl: './versenyek.component.html',
-  styleUrl: './versenyek.component.scss'
+  templateUrl: "./versenyek.component.html",
+  styleUrl: "./versenyek.component.scss",
 })
 export class VersenyekComponent implements OnInit {
   versenyForm: FormGroup;
-  versenyek: any[] = [];
+  versenyek = new MatTableDataSource<any>([]);
   palyak: any[] = [];
-  displayedColumns: string[] = ['index', 'round', 'grandPrix', 'date', 'status', 'circuit', 'actions'];
+  @ViewChild(MatPaginator) lapozoVerseny!: MatPaginator;
+  displayedColumns: string[] = [
+    "index",
+    "round",
+    "grandPrix",
+    "date",
+    "status",
+    "circuit",
+    "actions",
+  ];
   isEditMode = false;
-  selectedId: string | null = null;
-  statuses = ['scheduled', 'finished', 'cancelled'];
+  selectedId: number | null = null;
+  statuses = ["scheduled", "finished", "cancelled"];
 
-  constructor(private fb: FormBuilder, private apiService: ApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+  ) {
     this.versenyForm = this.fb.group({
       round: [null, [Validators.required, Validators.min(1)]],
-      grandPrix: ['', Validators.required],
-      date: ['', Validators.required],
-      status: ['scheduled', Validators.required],
-      circuitId: [null, Validators.required]
+      grandPrix: ["", Validators.required],
+      date: ["", Validators.required],
+      status: ["scheduled", Validators.required],
+      circuitId: [null, Validators.required],
     });
   }
 
@@ -56,32 +75,35 @@ export class VersenyekComponent implements OnInit {
   }
 
   loadVersenyek() {
-    this.apiService.selectAll('races').subscribe((data: any) => {
-      this.versenyek = data;
+    this.apiService.selectAll("races").subscribe((data: any) => {
+      this.versenyek.data = data;
+      this.versenyek.paginator = this.lapozoVerseny;
     });
   }
 
   loadPalyak() {
-    this.apiService.selectAll('circuits').subscribe((data: any) => {
+    this.apiService.selectAll("circuits").subscribe((data: any) => {
       this.palyak = data;
     });
   }
 
   getCircuitName(circuitId: number): string {
-    const circuit = this.palyak.find(c => c.id === circuitId);
-    return circuit ? circuit.name : '';
+    const circuit = this.palyak.find((c) => c.id === circuitId);
+    return circuit ? circuit.name : "";
   }
 
   onSubmit() {
     if (this.versenyForm.invalid) return;
 
     if (this.isEditMode && this.selectedId) {
-      this.apiService.update('races', this.selectedId, this.versenyForm.value).subscribe(() => {
-        this.resetForm();
-        this.loadVersenyek();
-      });
+      this.apiService
+        .update("races", this.selectedId, this.versenyForm.value)
+        .subscribe(() => {
+          this.resetForm();
+          this.loadVersenyek();
+        });
     } else {
-      this.apiService.insert('races', this.versenyForm.value).subscribe(() => {
+      this.apiService.insert("races", this.versenyForm.value).subscribe(() => {
         this.resetForm();
         this.loadVersenyek();
       });
@@ -92,16 +114,16 @@ export class VersenyekComponent implements OnInit {
     this.isEditMode = true;
     this.selectedId = verseny.id;
     this.versenyForm.patchValue({
-        round: verseny.round,
-        grandPrix: verseny.grandPrix,
-        date: verseny.date,
-        status: verseny.status,
-        circuitId: verseny.circuitId
+      round: verseny.round,
+      grandPrix: verseny.grandPrix,
+      date: verseny.date,
+      status: verseny.status,
+      circuitId: verseny.circuitId,
     });
   }
 
-  deleteVerseny(id: string) {
-    this.apiService.delete('races', id).subscribe(() => {
+  deleteVerseny(id: number) {
+    this.apiService.delete("races", id).subscribe(() => {
       this.loadVersenyek();
     });
   }
@@ -109,6 +131,6 @@ export class VersenyekComponent implements OnInit {
   resetForm() {
     this.isEditMode = false;
     this.selectedId = null;
-    this.versenyForm.reset({ status: 'scheduled' });
+    this.versenyForm.reset({ status: "scheduled" });
   }
 }

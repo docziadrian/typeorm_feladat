@@ -4,40 +4,31 @@ import { Team } from "../entities/entities/Team";
 
 export class TeamService {
   constructor(
-    private repo: Repository<Team> = AppDataSource.getRepository("Team"),
+    private repo: Repository<Team> = AppDataSource.getRepository(Team),
   ) {}
 
-  async createTeam(
-    name: string,
-    base: string,
-    principal: string,
-    powerUnit: string,
-    color: string,
-  ) {
-    const team = this.repo.create({ name, base, principal, powerUnit, color });
-    return this.repo.save(team);
-  }
-
-  async listTeams() {
+  async getAll() {
     return this.repo.find();
   }
 
-  async getTeamById(id: number) {
+  async getById(id: number) {
     return this.repo.findOneBy({ id });
   }
 
-  async updateTeam(
-    id: number,
-    name: string,
-    base: string,
-    principal: string,
-    powerUnit: string,
-    color: string,
-  ) {
-    return this.repo.update(id, { name, base, principal, powerUnit, color });
+  async create(data: Partial<Team>) {
+    const entity = this.repo.create(data);
+    return this.repo.save(entity);
   }
 
-  async deleteTeam(id: number) {
+  async update(id: number, data: Partial<Team>) {
+    return this.repo.update(id, data);
+  }
+
+  async delete(id: number) {
     return this.repo.delete(id);
+  }
+
+  async count() {
+    return this.repo.count();
   }
 }

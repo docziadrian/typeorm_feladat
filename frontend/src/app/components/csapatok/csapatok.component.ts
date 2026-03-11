@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
   ReactiveFormsModule,
@@ -6,12 +6,13 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatTableModule } from "@angular/material/table";
+import { MatTableModule, MatTableDataSource } from "@angular/material/table";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from "@angular/material/card";
+import { MatPaginatorModule, MatPaginator } from "@angular/material/paginator";
 import { ApiService } from "../../services/api.service";
 
 @Component({
@@ -26,13 +27,15 @@ import { ApiService } from "../../services/api.service";
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatPaginatorModule,
   ],
   templateUrl: "./csapatok.component.html",
   styleUrl: "./csapatok.component.scss",
 })
 export class CsapatokComponent implements OnInit {
   csapatForm: FormGroup;
-  csapatok: any[] = [];
+  csapatok = new MatTableDataSource<any>([]);
+  @ViewChild(MatPaginator) lapozoCsapat!: MatPaginator;
   displayedColumns: string[] = [
     "index",
     "name",
@@ -43,7 +46,7 @@ export class CsapatokComponent implements OnInit {
     "actions",
   ];
   isEditMode = false;
-  selectedId: string | null = null;
+  selectedId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -64,7 +67,8 @@ export class CsapatokComponent implements OnInit {
 
   loadCsapatok() {
     this.apiService.selectAll("teams").subscribe((data: any) => {
-      this.csapatok = data;
+      this.csapatok.data = data;
+      this.csapatok.paginator = this.lapozoCsapat;
     });
   }
 
@@ -92,7 +96,7 @@ export class CsapatokComponent implements OnInit {
     this.csapatForm.patchValue(csapat);
   }
 
-  deleteCsapat(id: string) {
+  deleteCsapat(id: number) {
     this.apiService.delete("teams", id).subscribe(() => {
       this.loadCsapatok();
     });

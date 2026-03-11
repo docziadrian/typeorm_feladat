@@ -5,14 +5,15 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Team } from "./Team";
 import { RaceResult } from "./RaceResult";
 
 @Index("idx_driver_teamId", ["teamId"], {})
-@Entity("driver", { schema: "2025_forma1" })
+@Entity("driver")
 export class Driver {
-  @Column("int", { primary: true, name: "id" })
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column("varchar", { name: "firstName", length: 255 })
